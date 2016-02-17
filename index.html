@@ -1,1 +1,538 @@
-My Octopress Page is coming soon &hellip;
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Frank 1ee</title>
+  <meta name="author" content="Frank Lee">
+
+  
+  <meta name="description" content="这是一篇关于在 Swift 下通过 API 获取数据的学习笔记，如有错误纰漏欢迎评论指出，感谢。 ">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://frank1ee.github.io">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Frank 1ee" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-68396337-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Frank 1ee</a></h1>
+  
+    <h2>To be a builder of beauty.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/12/05/zai-swift-zhong-shi-yong-api(json,-nsdata)/">在 Swift 中使用 API（JSON、NSData）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-12-05T11:17:38+08:00" pubdate data-updated="true">Dec 5th, 2015</time>
+        
+           | <a href="/blog/2015/12/05/zai-swift-zhong-shi-yong-api(json,-nsdata)/#disqus_thread"
+             data-disqus-identifier="http://frank1ee.github.io/blog/2015/12/05/zai-swift-zhong-shi-yong-api(json,-nsdata)/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是一篇关于在 Swift 下通过 API 获取数据的学习笔记，如有错误纰漏欢迎评论指出，感谢。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/12/05/zai-swift-zhong-shi-yong-api(json,-nsdata)/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/26/ri-yu-jiao-cai-%3C%3Cbiao-zhun-ri-ben-yu-%3E%3E-xue-xi-bi-ji/">日语教材《标准日本语》学习笔记</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-11-26T22:50:27+08:00" pubdate data-updated="true">Nov 26th, 2015</time>
+        
+           | <a href="/blog/2015/11/26/ri-yu-jiao-cai-%3C%3Cbiao-zhun-ri-ben-yu-%3E%3E-xue-xi-bi-ji/#disqus_thread"
+             data-disqus-identifier="http://frank1ee.github.io/blog/2015/11/26/ri-yu-jiao-cai-%3C%3Cbiao-zhun-ri-ben-yu-%3E%3E-xue-xi-bi-ji/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://book.douban.com/subject/1501873/">《标准日本语》</a>，由人民教育出版社出版，这是本好教材，还有配套的 <a href="https://itunes.apple.com/cn/app/xin-ban-zhong-ri-jiao-liu/id847327884?mt=8">App</a> 可供下载。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/11/26/ri-yu-jiao-cai-%3C%3Cbiao-zhun-ri-ben-yu-%3E%3E-xue-xi-bi-ji/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/04/%3C%3Cying-yu-mo-fa-shi-%3E%3E-xue-xi-bi-ji/">《英语魔法师》学习笔记（续更）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-11-04T20:57:47+08:00" pubdate data-updated="true">Nov 4th, 2015</time>
+        
+           | <a href="/blog/2015/11/04/%3C%3Cying-yu-mo-fa-shi-%3E%3E-xue-xi-bi-ji/#disqus_thread"
+             data-disqus-identifier="http://frank1ee.github.io/blog/2015/11/04/%3C%3Cying-yu-mo-fa-shi-%3E%3E-xue-xi-bi-ji/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://book.douban.com/subject/1014914/">《英语魔法师之语法俱乐部》</a>是<a href="http://baike.baidu.com/link?url=YY6Nzko9s81VbOEUt958j4NU8MDjlvpQiMO5jTNCUozsFoOj7gJufHDC6W4d6Kpk-N0SZh25VJR1z5bUCIeZga">旋元佑</a>老师完成的英语语法书，在豆瓣评分高达9.5，可以说是颇具口碑的一本语法书。作者三番五次地在书中埋汰市面上多数语法书有很多似通非通的「规则」，规则解释不了就叫「例外」，而作者主张好的语法观念多注重理解，无需去背各种各样的规则和例外。该书分为三篇：简单句、复句与合句、简化从句，先从基本简单句型切入，再到将简单句合成成为复合句型，最后到精简复合句的简化从句，层层递进。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/11/04/%3C%3Cying-yu-mo-fa-shi-%3E%3E-xue-xi-bi-ji/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/27/wo-zai-ting-de-na-xie-podcast/">我在听的那些 Podcast</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-10-27T16:06:18+08:00" pubdate data-updated="true">Oct 27th, 2015</time>
+        
+           | <a href="/blog/2015/10/27/wo-zai-ting-de-na-xie-podcast/#disqus_thread"
+             data-disqus-identifier="http://frank1ee.github.io/blog/2015/10/27/wo-zai-ting-de-na-xie-podcast/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>相信不少人和我一样，第一次接触 podcast（播客）这个概念是在 iOS 系统中，其自带了一个「播客」应用，可以找到自己感兴趣的节目在线或是下载播放收听。真正开始坚持收听播客是因为英语学习的需求找到 <a href="https://www.eslpod.com/website/">ESL Podcast</a>  这个节目，而后又相继订阅了几个，可以说播客现在已经是我日常生活中的一部分（通常在洗衣服或乘坐交通工具时收听）。</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/10/27/wo-zai-ting-de-na-xie-podcast/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/13/ji-jiu-zhai-cheng-du-xing/">记九寨成都行（上）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-10-13T16:50:31+08:00" pubdate data-updated="true">Oct 13th, 2015</time>
+        
+           | <a href="/blog/2015/10/13/ji-jiu-zhai-cheng-du-xing/#disqus_thread"
+             data-disqus-identifier="http://frank1ee.github.io/blog/2015/10/13/ji-jiu-zhai-cheng-du-xing/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>此次出行共计5天，10月5日出发飞成都，当天飞往九寨黄龙机场并入住酒店，10月7日晚到达成都，10月9日回到厦门。</p>
+
+<p style="text-align:center;"><img src="/images/jiuzhaichengdu/%E5%8F%8C%E6%B5%81%E6%9C%BA%E5%9C%BA.png" alt="alt text" /></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/10/13/ji-jiu-zhai-cheng-du-xing/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/09/13/hacking-with-swift-xue-xi-bi-ji/">Hacking With Swift 学习笔记</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-09-13T17:06:01+08:00" pubdate data-updated="true">Sep 13th, 2015</time>
+        
+           | <a href="/blog/2015/09/13/hacking-with-swift-xue-xi-bi-ji/#disqus_thread"
+             data-disqus-identifier="http://frank1ee.github.io/blog/2015/09/13/hacking-with-swift-xue-xi-bi-ji/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://www.hackingwithswift.com/">Hacking with Swift</a> 是由 <a href="https://twitter.com/twostraws">Paul Hudson</a> 发布的 免费 Swift 教程，其涵盖了30个项目，并且包含了 Swift 2.0。因为该教程是面向初学者，所以很多知识点都没有深入探讨，如果想要深入学习可以参考官方文档：<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0">The Swift Programming Language (Swift 2.1)</a></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/09/13/hacking-with-swift-xue-xi-bi-ji/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/09/06/xie-zai-kai-xue-qian/">写在开学前</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-09-06T22:03:27+08:00" pubdate data-updated="true">Sep 6th, 2015</time>
+        
+           | <a href="/blog/2015/09/06/xie-zai-kai-xue-qian/#disqus_thread"
+             data-disqus-identifier="http://frank1ee.github.io/blog/2015/09/06/xie-zai-kai-xue-qian/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>三月底结束专升本考试，为期五个月的「暑假」转瞬即逝，这五个月我都做了什么事情，都有哪些收获，遗憾和不足？以下，简单总结：</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/09/06/xie-zai-kai-xue-qian/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/09/01/hello-world/">Hello World</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-09-01T09:03:17+08:00" pubdate data-updated="true">Sep 1st, 2015</time>
+        
+           | <a href="/blog/2015/09/01/hello-world/#disqus_thread"
+             data-disqus-identifier="http://frank1ee.github.io/blog/2015/09/01/hello-world/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Test，博客的第一篇文章。</p>
+
+<p>其实早在几星期前就想搭一个自己的 blog，但因为各种原因迟迟没有完成。先后尝试过 Wordpress，Weebly，但总觉得不是真正的「属于自己的博客」，其实之前也有了解过 Octopress，但是一看官网写明需要 Git 基础就吓得落跑了..</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/09/01/hello-world/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+   
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:frank1ee.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/12/05/zai-swift-zhong-shi-yong-api(json,-nsdata)/">在 Swift 中使用 API（JSON、NSData）</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/26/ri-yu-jiao-cai-%3C%3Cbiao-zhun-ri-ben-yu-%3E%3E-xue-xi-bi-ji/">日语教材《标准日本语》学习笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/04/%3C%3Cying-yu-mo-fa-shi-%3E%3E-xue-xi-bi-ji/">《英语魔法师》学习笔记（续更）</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/10/27/wo-zai-ting-de-na-xie-podcast/">我在听的那些 Podcast</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/10/13/ji-jiu-zhai-cheng-du-xing/">记九寨成都行（上）</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Frank Lee -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'franklee067';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  $(document).ready(function() {  
+    var stickyNavTop = $('nav').offset().top;  
+      
+    var stickyNav = function(){  
+      var scrollTop = $(window).scrollTop(); 
+      var navHasClassSticky = $('nav').hasClass('sticky');
+
+      if (scrollTop > stickyNavTop && navHasClassSticky) {   
+        return true;
+      } else if (scrollTop > stickyNavTop) {
+        $('nav').hide();
+        $('nav').addClass('sticky');
+        $('nav').fadeIn('2000');
+      } else {  
+        $('nav').removeClass('sticky');   
+      }  
+    };  
+      
+    stickyNav();  
+      
+    $(window).scroll(function() {  
+      stickyNav();  
+    });  
+  });  
+</script>
+
+
+</body>
+</html>

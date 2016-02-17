@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>在 Swift 中使用 API（JSON、NSData） - Frank 1ee</title>
+  <meta name="author" content="Frank Lee">
+
+  
+  <meta name="description" content="这是一篇关于在 Swift 下通过 API 获取数据的学习笔记，如有错误纰漏欢迎评论指出，感谢。 什么是API？ 记得刚开始学习iOS开发时就接触过这个字眼，遂 Google 得到以下解释： 应用程序接口（英语：Application Programming Interface，简称：API）， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://frank1ee.github.io/blog/2015/12/05/zai-swift-zhong-shi-yong-api(json,-nsdata)">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Frank 1ee" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-68396337-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Frank 1ee</a></h1>
+  
+    <h2>To be a builder of beauty.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">在 Swift 中使用 API（JSON、NSData）</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-12-05T11:17:38+08:00" pubdate data-updated="true">Dec 5th, 2015</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://frank1ee.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>这是一篇关于在 Swift 下通过 API 获取数据的学习笔记，如有错误纰漏欢迎评论指出，感谢。</p>
+
+<!--more-->
+
+
+<h2>什么是API？</h2>
+
+<p>记得刚开始学习iOS开发时就接触过这个字眼，遂 Google 得到以下解释：</p>
+
+<blockquote><p>应用程序接口（英语：Application Programming Interface，简称：API），又称为应用编程接口，就是软件系统不同组成部分衔接的约定。由于近年来软件的规模日益庞大，常常需要把复杂的系统划分成小的组成部分，编程接口的设计十分重要。程序设计的实践中，编程接口的设计首先要使软件系统的职责得到合理划分。良好的接口设计可以降低系统各部分的相互依赖，提高组成单元的内聚性，降低组成单元间的耦合程度，从而提高系统的维护性和扩展性。- 摘自维基百科</p></blockquote>
+
+<p>毫无疑问看得一知半解。简而言之，API的用途就是接入数据的通道，比如你想开发一个读书类的 App，需要图书信息资源，这时候就可以找到豆瓣提供的 API 来接入获取数据。</p>
+
+<h2>通过平台提供的 API 获取 JSON</h2>
+
+<p>这里拿白宫的<a href="https://petitions.whitehouse.gov/developers">请愿书</a> API 为例，通过提供的 API 请求到下方的 JSON 数据（示例）。JSON，可以理解为一种描述数据的文本格式，</p>
+
+<p style="text-align:center;"><img src="/images/petition.png" alt="alt text" /></p>
+
+<h2>SwiftyJSON</h2>
+
+<p><a href="https://github.com/SwiftyJSON/SwiftyJSON">SwiftyJSON</a>是一个可以让解析 JSON 数据变得异常方便的第三方库，详细内容可以点击转跳到 Github 页查看。</p>
+
+<h2>确认状态</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">//通过平台提供的 API 链接创建一个 String</span>
+</span><span class='line'> <span class="k">let</span> <span class="n">urlString</span> <span class="o">=</span> <span class="s">&quot;https://api.whitehouse.gov/v1/petitions.json?limit=100&quot;</span>
+</span><span class='line'><span class="c1">//创建 NSData 对象</span>
+</span><span class='line'>   <span class="k">if</span> <span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="bp">NSURL</span><span class="p">(</span><span class="nl">string</span><span class="p">:</span> <span class="n">urlString</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="k">let</span> <span class="n">data</span> <span class="o">=</span> <span class="n">try</span><span class="o">?</span> <span class="bp">NSData</span><span class="p">(</span><span class="nl">contentsOfURL</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nl">options</span><span class="p">:</span> <span class="p">[])</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">//导入SwiftyJSON，传入NSData 创建 JSON 对象</span>
+</span><span class='line'>         <span class="k">let</span> <span class="n">json</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">(</span><span class="nl">data</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="c1">//通过 SwiftyJSON 便利地「一层层剥开」拿到数据</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">json</span><span class="p">[</span><span class="s">&quot;metadata&quot;</span><span class="p">][</span><span class="s">&quot;responseInfo&quot;</span><span class="p">][</span><span class="s">&quot;status&quot;</span><span class="p">].</span><span class="n">intValue</span> <span class="o">==</span> <span class="mi">200</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// 确认状态后就可以开始解析JSON</span>
+</span><span class='line'>         <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>   <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>获取状态指的是解析 JSON 拿到"status"的值，当 status 的值为"200"时，意为「一切正常」。根据白宫请愿开发者页面所示，例如服务器异常引发的获取失败，那么 status 的值将会是"599"，从而可以让我们对不同的情况做出不同的响应。</p>
+
+<h2>获取数据</h2>
+
+<p>上面「确认状态」的片段其实已经涉及到了获取数据。我们可以查看平台提供的JSON返回数据实例来了解各个数据的嵌套方式和各个数据的「title」，方便我们获取数据：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="s">&quot;metadata&quot;</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s">&quot;responseInfo&quot;</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="s">&quot;status&quot;</span><span class="o">:</span> <span class="mi">200</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;developerMessage&quot;</span><span class="o">:</span> <span class="s">&quot;OK&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;userMessage&quot;</span><span class="o">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;errorCode&quot;</span><span class="o">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;moreInfo&quot;</span><span class="o">:</span> <span class="s">&quot;&quot;</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="s">&quot;requestInfo&quot;</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="s">&quot;apiVersion&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;resource&quot;</span><span class="o">:</span> <span class="s">&quot;petitions&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;query&quot;</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="s">&quot;body&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;createdAfter&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;createdAt&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;createdBefore&quot;</span><span class="o">:</span> <span class="s">&quot;1352924535&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;isPublic&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;isSignable&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;limit&quot;</span><span class="o">:</span> <span class="s">&quot;3&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;mock&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;offset&quot;</span><span class="o">:</span> <span class="s">&quot;0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;petitionsDefaultLimit&quot;</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;publicThreshold&quot;</span><span class="o">:</span> <span class="mi">149</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;responseId&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;signatureCount&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;signatureCountCeiling&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;signatureCountFloor&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;signatureThreshold&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;signatureThresholdCeiling&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;signatureThresholdFloor&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;status&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;title&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="n">null</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;websiteUrl&quot;</span><span class="o">:</span> <span class="s">&quot;https://petitions.whitehouse.gov&quot;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="s">&quot;resultset&quot;</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="s">&quot;count&quot;</span><span class="o">:</span> <span class="mi">809</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;limit&quot;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;offset&quot;</span><span class="o">:</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>  <span class="s">&quot;results&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;226511&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;petition&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;title&quot;</span><span class="o">:</span> <span class="s">&quot;Ban the practice of circumcising individuals under the age of 18.&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;body&quot;</span><span class="o">:</span> <span class="s">&quot;Circumcision is a barbaric tribal practice that amounts to child abuse. Before any individual under go any permanent body modification such as tattooing or sex reassignment surgery they must be considered old enough to understand the consequences. You cannot understand the ramifications of this act to your physical being until after puberty, when your genitals have fully developed. &quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;issues&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>          <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span>
+</span><span class='line'>          <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Civil Rights and Liberties&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>          <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="mi">25</span><span class="p">,</span>
+</span><span class='line'>          <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Health Care&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>          <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="mi">28</span><span class="p">,</span>
+</span><span class='line'>          <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Human Rights&quot;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">],</span>
+</span><span class='line'>      <span class="s">&quot;signatureThreshold&quot;</span><span class="o">:</span> <span class="mi">25000</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;signatureCount&quot;</span><span class="o">:</span> <span class="mi">3085</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;signaturesNeeded&quot;</span><span class="o">:</span> <span class="mi">21915</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;https://petitions.whitehouse.gov/petition/ban-practice-circumcising-individuals-under-age-18&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;deadline&quot;</span><span class="o">:</span> <span class="mi">1355512735</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;status&quot;</span><span class="o">:</span> <span class="s">&quot;closed&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;response&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="p">],</span>
+</span><span class='line'>      <span class="s">&quot;created&quot;</span><span class="o">:</span> <span class="mi">1352920735</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;isSignable&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;isPublic&quot;</span><span class="o">:</span> <span class="nb">true</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;224306&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;petition&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;title&quot;</span><span class="o">:</span> <span class="s">&quot;Remove HEMP (Non-Psychoactive Cannabis) from the Federal governments banned substance list. Make it Legal to Grow in USA&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;body&quot;</span><span class="o">:</span> <span class="s">&quot;There is no reason for it to be illegal. It won&#39;t make you high. It is Not Marijuana, and it alone could make enough oil to free the nation. Hemp is the most versatile plant in the Universe, its strong enough to make rope, and diverse enough to make oil. This plant will grow almost everywhere with very little maintenance and without watering.And it is insect resistant naturally. It grows quickly and the steps to turn it into gasoline are very simple. We could replace our need for anything other than hemp in a matter of Months, not years.</span><span class="se">\r\n\r\n</span><span class="s">Fuel:</span><span class="se">\r\n\r\n</span><span class="s">* Hemp can produce 10 times more methanol than corn. </span><span class="se">\r\n</span><span class="s">* Hemp is Earth&#39;s number-one biomass resource; it is capable of producing 10 tons per acre in four months.</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;issues&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>          <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>          <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Agriculture&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>          <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span class='line'>          <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Budget and Taxes&quot;</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>          <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="mi">20</span><span class="p">,</span>
+</span><span class='line'>          <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Environment&quot;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">],</span>
+</span><span class='line'>      <span class="s">&quot;signatureThreshold&quot;</span><span class="o">:</span> <span class="mi">25000</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;signatureCount&quot;</span><span class="o">:</span> <span class="mi">5091</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;signaturesNeeded&quot;</span><span class="o">:</span> <span class="mi">19909</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;https://petitions.whitehouse.gov/petition/remove-hemp-non-psychoactive-cannabis-federal-governments-banned-substance-list-make-it&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;deadline&quot;</span><span class="o">:</span> <span class="mi">1355510348</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;status&quot;</span><span class="o">:</span> <span class="s">&quot;closed&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;response&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="p">],</span>
+</span><span class='line'>      <span class="s">&quot;created&quot;</span><span class="o">:</span> <span class="mi">1352918348</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;isSignable&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;isPublic&quot;</span><span class="o">:</span> <span class="nb">true</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;224016&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;petition&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;title&quot;</span><span class="o">:</span> <span class="s">&quot;Stop the US Diversity Immigrant Visa (Lottery) Program - </span><span class="se">\&quot;</span><span class="s">The USA&#39;s Open Door Welfare Program</span><span class="se">\&quot;</span><span class="s">...&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;body&quot;</span><span class="o">:</span> <span class="s">&quot;Millions of Americans don&#39;t realize what&#39;s going on in this country.</span><span class="se">\r\n</span><span class="s">Anyone can fill out an online application form, then </span><span class="se">\&quot;</span><span class="s">WIN</span><span class="se">\&quot;</span><span class="s"> the right to come to this country and claim all the benefits. The LOTTERY makes available up to 55,000 diversity visas annually, drawn from random selection BY COMPUTER; they are just WINNING</span><span class="se">\&quot;</span><span class="s"> permanent resident status based on no qualifications!</span><span class="se">\r\n</span><span class="s">As a result, government officials are admitting millions of immigrants each year who are dependent on Medicaid, child care benefits, foster care, energy assistance, education assistance, nutritional welfare programs and other medical and health benefits.</span><span class="se">\r\n</span><span class="s">We cant afford for our government to promote a policy that encourages immigrants to apply for a green card Lottery and </span><span class="se">\&quot;</span><span class="s">WIN</span><span class="se">\&quot;</span><span class="s">- NOT DESERVE the right to become USA citizen!&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;issues&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>          <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="mi">29</span><span class="p">,</span>
+</span><span class='line'>          <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Immigration&quot;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">],</span>
+</span><span class='line'>      <span class="s">&quot;signatureThreshold&quot;</span><span class="o">:</span> <span class="mi">25000</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;signatureCount&quot;</span><span class="o">:</span> <span class="mi">2819</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;signaturesNeeded&quot;</span><span class="o">:</span> <span class="mi">22181</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;https://petitions.whitehouse.gov/petition/stop-us-diversity-immigrant-visa-lottery-program-usas-open-door-welfare-program&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;deadline&quot;</span><span class="o">:</span> <span class="mi">1355509876</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;status&quot;</span><span class="o">:</span> <span class="s">&quot;closed&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;response&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="p">],</span>
+</span><span class='line'>      <span class="s">&quot;created&quot;</span><span class="o">:</span> <span class="mi">1352917876</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;isSignable&quot;</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;isPublic&quot;</span><span class="o">:</span> <span class="nb">true</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>刚刚我们想要"status"的数据，就通过 SwiftyJSON 的 json[&ldquo;metadata&rdquo;][&ldquo;responseInfo&rdquo;][&ldquo;status&rdquo;].intValue 「剥开」三层拿到数据的 int 值，而"result"数据与"metadata"平级，就可以这么拿到数据：json[&ldquo;result&rdquo;]。</p>
+
+<p>根据这个 API 提供的数据，拿到请愿书的 title、body 等数据：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">for</span> <span class="n">result</span> <span class="k">in</span> <span class="n">json</span><span class="p">[</span><span class="s">&quot;results&quot;</span><span class="p">].</span><span class="n">arrayValue</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">title</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s">&quot;title&quot;</span><span class="p">].</span><span class="n">stringValue</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">body</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s">&quot;body&quot;</span><span class="p">].</span><span class="n">stringValue</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">sigs</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s">&quot;signatureCount&quot;</span><span class="p">].</span><span class="n">stringValue</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">obj</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;title&quot;</span><span class="o">:</span> <span class="n">title</span><span class="p">,</span> <span class="s">&quot;body&quot;</span><span class="o">:</span> <span class="n">body</span><span class="p">,</span> <span class="s">&quot;sigs&quot;</span><span class="o">:</span> <span class="n">sigs</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>取得"result"数据的数组值并遍历每块"result"，进一步从中取出其他数据并根据 key 保存在字典中，这样我们就实现了从平台上获取数据啦。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Frank Lee</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-12-05T11:17:38+08:00" pubdate data-updated="true">Dec 5th, 2015</time>
+      
+
+
+    </p>
+    
+      <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1344.72">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+    span.s2 {text-decoration: underline ; font-kerning: none; color: #0000ee; -webkit-text-stroke: 0px #0000ee}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">  <span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"></span></p>
+</body>
+</html>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/11/26/ri-yu-jiao-cai-%3C%3Cbiao-zhun-ri-ben-yu-%3E%3E-xue-xi-bi-ji/" title="Previous Post: 日语教材《标准日本语》学习笔记">&laquo; 日语教材《标准日本语》学习笔记</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+  <aside class="sidebar">
+   
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:frank1ee.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/12/05/zai-swift-zhong-shi-yong-api(json,-nsdata)/">在 Swift 中使用 API（JSON、NSData）</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/26/ri-yu-jiao-cai-%3C%3Cbiao-zhun-ri-ben-yu-%3E%3E-xue-xi-bi-ji/">日语教材《标准日本语》学习笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/04/%3C%3Cying-yu-mo-fa-shi-%3E%3E-xue-xi-bi-ji/">《英语魔法师》学习笔记（续更）</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/10/27/wo-zai-ting-de-na-xie-podcast/">我在听的那些 Podcast</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/10/13/ji-jiu-zhai-cheng-du-xing/">记九寨成都行（上）</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Frank Lee -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'franklee067';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://frank1ee.github.io/blog/2015/12/05/zai-swift-zhong-shi-yong-api(json,-nsdata)/';
+        var disqus_url = 'http://frank1ee.github.io/blog/2015/12/05/zai-swift-zhong-shi-yong-api(json,-nsdata)/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  $(document).ready(function() {  
+    var stickyNavTop = $('nav').offset().top;  
+      
+    var stickyNav = function(){  
+      var scrollTop = $(window).scrollTop(); 
+      var navHasClassSticky = $('nav').hasClass('sticky');
+
+      if (scrollTop > stickyNavTop && navHasClassSticky) {   
+        return true;
+      } else if (scrollTop > stickyNavTop) {
+        $('nav').hide();
+        $('nav').addClass('sticky');
+        $('nav').fadeIn('2000');
+      } else {  
+        $('nav').removeClass('sticky');   
+      }  
+    };  
+      
+    stickyNav();  
+      
+    $(window).scroll(function() {  
+      stickyNav();  
+    });  
+  });  
+</script>
+
+
+</body>
+</html>

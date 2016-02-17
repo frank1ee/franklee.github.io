@@ -1,0 +1,1613 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Hacking With Swift 学习笔记 - Frank 1ee</title>
+  <meta name="author" content="Frank Lee">
+
+  
+  <meta name="description" content="Hacking with Swift 是由 Paul Hudson 发布的 免费 Swift 教程，其涵盖了30个项目，并且包含了 Swift 2.0。因为该教程是面向初学者，所以很多知识点都没有深入探讨，如果想要深入学习可以参考官方文档：The Swift Programming &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://frank1ee.github.io/blog/2015/09/13/hacking-with-swift-xue-xi-bi-ji">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Frank 1ee" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-68396337-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Frank 1ee</a></h1>
+  
+    <h2>To be a builder of beauty.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Hacking With Swift 学习笔记</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-09-13T17:06:01+08:00" pubdate data-updated="true">Sep 13th, 2015</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://frank1ee.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="https://www.hackingwithswift.com/">Hacking with Swift</a> 是由 <a href="https://twitter.com/twostraws">Paul Hudson</a> 发布的 免费 Swift 教程，其涵盖了30个项目，并且包含了 Swift 2.0。因为该教程是面向初学者，所以很多知识点都没有深入探讨，如果想要深入学习可以参考官方文档：<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0">The Swift Programming Language (Swift 2.1)</a><!--more--></p>
+
+<h1>Introducing to Swift</h1>
+
+<ul>
+<li>Playground 是自 Xcode6 起苹果加入的实时浏览代码结果的一个功能。</li>
+</ul>
+
+
+<p><br /></p>
+
+<ul>
+<li>变量通过 var 声明，常量通过 let 声明。
+Swift 可以推断变量的类型(type reference)，所以声明变量可以直接如下：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="n">string</span> <span class="o">=</span> <span class="err">“</span><span class="n">My</span> <span class="n">string</span><span class="err">”</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//也可以先声明类型（必须）或声明与赋值同时：</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">var</span> <span class="nl">string</span><span class="p">:</span><span class="n">String</span> <span class="o">=</span> <span class="err">“</span><span class="n">My</span> <span class="n">string</span><span class="err">”</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>苹果官方建议在声明有小数部分的变量时都采用 Double，因其具有更高的精准度。</li>
+</ul>
+
+
+<p><br /></p>
+
+<ul>
+<li>Swift 中 bool 值是 true 和 false。</li>
+</ul>
+
+
+<p><br /></p>
+
+<ul>
+<li>“+” 号也可用于 string :</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="n">name1</span> <span class="o">=</span> <span class="s">&quot;Tim McGraw&quot;</span>
+</span><span class='line'><span class="k">var</span> <span class="n">name2</span> <span class="o">=</span> <span class="s">&quot;Romeo&quot;</span>
+</span><span class='line'><span class="k">var</span> <span class="n">both</span> <span class="o">=</span> <span class="n">name1</span> <span class="o">+</span> <span class="s">&quot; and &quot;</span> <span class="o">+</span> <span class="n">name2</span> <span class="c1">//&quot;Tim McGraw and Romeo&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>字符串的对比运算是”case-sensitive”，也就是区分大小写：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="n">name</span> <span class="o">=</span> <span class="err">“</span><span class="n">TIM</span> <span class="n">MCGRAW</span><span class="s">&quot; </span>
+</span><span class='line'><span class="k">var</span> <span class="n">name2</span> <span class="o">=</span>  <span class="s">&quot;TiM mCgRaW&quot;</span>
+</span><span class='line'><span class="n">name</span> <span class="o">==</span> <span class="n">name2</span>  <span class="c1">//result is false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在 string 中插入变量：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="n">name</span> <span class="o">=</span> <span class="err">“</span><span class="n">Tim</span> <span class="n">McGraw</span><span class="err">”</span>
+</span><span class='line'><span class="err">“</span><span class="n">Your</span> <span class="n">name</span> <span class="kt">is</span> <span class="err">\</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="err">”</span>
+</span><span class='line'><span class="c1">//可以在括号中运算：</span>
+</span><span class='line'><span class="k">var</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">25</span>
+</span><span class='line'><span class="err">“</span><span class="n">His</span> <span class="n">age</span> <span class="kt">is</span> <span class="err">\</span><span class="p">(</span><span class="n">age</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span><span class="err">”</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Arrays,Dictionaries,Loops,Switch case</h2>
+
+<ul>
+<li>通过类型注释（Type annotaions）可以申明数组内容的类型：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="nl">songs</span><span class="p">:</span> <span class="p">[</span><span class="n">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Shake it Off&quot;</span><span class="p">,</span> <span class="s">&quot;You Belong with Me&quot;</span><span class="p">,</span> <span class="s">&quot;Back to December&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span><span class='line'><span class="c1">//以上会报错，因为数组内有非 String 类型的”3”在内。</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><br /></p>
+
+<ul>
+<li>以下代码仅仅是声明了一个将要被分配包含String对象数组的变量：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="nl">array</span><span class="p">:[</span><span class="n">String</span><span class="p">]</span>
+</span><span class='line'><span class="c1">//没有真正创建数组对象</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">var</span> <span class="nl">array</span><span class="p">:</span> <span class="p">[</span><span class="n">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'><span class="c1">//这时才是创建了数组对象</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">var</span> <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="n">String</span><span class="p">]</span> <span class="p">()</span>
+</span><span class='line'><span class="c1">//效果同上，语法更为简洁。</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>数组可以直接使用”+”运算符结合：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="n">songs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Shake it Off&quot;</span><span class="p">,</span> <span class="s">&quot;You Belong with Me&quot;</span><span class="p">,</span> <span class="s">&quot;Love Story&quot;</span><span class="p">]</span>
+</span><span class='line'><span class="k">var</span> <span class="n">songs2</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Today was a Fairytale&quot;</span><span class="p">,</span> <span class="s">&quot;White Horse&quot;</span><span class="p">,</span> <span class="s">&quot;Fifteen&quot;</span><span class="p">]</span>
+</span><span class='line'><span class="k">var</span> <span class="n">both</span> <span class="o">=</span> <span class="n">songs</span> <span class="o">+</span> <span class="n">songs2</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">both</span> <span class="o">+=</span> <span class="p">[</span><span class="err">“</span><span class="n">Everything</span><span class="err">”</span><span class="p">]</span>
+</span><span class='line'><span class="c1">//可以增加并赋值</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><br /></p>
+
+<ul>
+<li>创建一个 Disctionary：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="n">person</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class='line'>      <span class="s">&quot;first&quot;</span><span class="o">:</span> <span class="s">&quot;Taylor&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;middle&quot;</span><span class="o">:</span> <span class="s">&quot;Alison&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;last&quot;</span><span class="o">:</span> <span class="s">&quot;Swift&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;month&quot;</span><span class="o">:</span> <span class="s">&quot;December&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s">&quot;website&quot;</span><span class="o">:</span> <span class="s">&quot;taylorswift.com&quot;</span>
+</span><span class='line'>            <span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Swift 中，条件表达式不需要括号：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">if</span> <span class="n">person</span> <span class="o">==</span> <span class="s">&quot;hater&quot;</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">action</span> <span class="o">=</span> <span class="s">&quot;hate&quot;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">person</span> <span class="o">==</span> <span class="s">&quot;player&quot;</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">action</span> <span class="o">=</span> <span class="s">&quot;play&quot;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">action</span> <span class="o">=</span> <span class="s">&quot;cruise&quot;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>在 Swift 2.0中，println() 改为 print()</code></li>
+</ul>
+
+
+<p><br /></p>
+
+<ul>
+<li>Swift 的 for 循环语法：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// closed range operator</span>
+</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">.</span><span class="mf">.10</span><span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(i) x 10 is \(i * 10)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm">以上结果相当于：</span>
+</span><span class='line'><span class="cm">println(&quot;1 x 10 is \(1 * 10)&quot;)</span>
+</span><span class='line'><span class="cm">println(&quot;2 x 10 is \(2 * 10)&quot;)</span>
+</span><span class='line'><span class="cm">println(&quot;3 x 10 is \(3 * 10)&quot;)</span>
+</span><span class='line'><span class="cm">println(&quot;4 x 10 is \(4 * 10)&quot;)</span>
+</span><span class='line'><span class="cm">println(&quot;5 x 10 is \(5 * 10)&quot;)</span>
+</span><span class='line'><span class="cm">println(&quot;6 x 10 is \(6 * 10)&quot;)</span>
+</span><span class='line'><span class="cm">println(&quot;7 x 10 is \(7 * 10)&quot;)</span>
+</span><span class='line'><span class="cm">println(&quot;8 x 10 is \(8 * 10)&quot;)</span>
+</span><span class='line'><span class="cm">println(&quot;9 x 10 is \(9 * 10)&quot;)</span>
+</span><span class='line'><span class="cm">println(&quot;10 x 10 is \(10 * 10)&quot;)</span>
+</span><span class='line'><span class="cm">*/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>不需要「循环数」时也可以用下划线代替：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">for</span> <span class="n">_</span> <span class="k">in</span> <span class="mi">1</span> <span class="p">...</span> <span class="mi">5</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">str</span> <span class="o">+=</span> <span class="s">&quot; fake&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>half open range operator(半开区间运算符):&ldquo;..&lt;"，例如 ..&lt;5 将会循环四次，count 将会是 1,2,3,4。&rdquo;..&lt;&ldquo; 可以方便于遍历数组（数组的 index 从0算起）：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">0</span> <span class="p">..</span><span class="o">&lt;</span> <span class="n">count</span><span class="p">(</span><span class="n">people</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(people[i]) gonna \(actions[i])&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>遍历数组的语法：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="p">...</span>
+</span><span class='line'>      
+</span><span class='line'><span class="k">for</span> <span class="n">song</span> <span class="k">in</span> <span class="n">songs</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;My favorite song is \(song)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="c1">//通过 index 同时遍历俩数组：</span>
+</span><span class='line'><span class="k">var</span> <span class="n">people</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;players&quot;</span><span class="p">,</span> <span class="s">&quot;haters&quot;</span><span class="p">,</span> <span class="s">&quot;heart-breakers&quot;</span><span class="p">,</span> <span class="s">&quot;fakers&quot;</span><span class="p">]</span>
+</span><span class='line'><span class="k">var</span> <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;play&quot;</span><span class="p">,</span> <span class="s">&quot;hate&quot;</span><span class="p">,</span> <span class="s">&quot;break&quot;</span><span class="p">,</span> <span class="s">&quot;fake&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">0</span> <span class="p">...</span> <span class="mi">3</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(people[i]) gonna \(actions[i])&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><br /></p>
+
+<ul>
+<li><code>获取数组内的对象数量的方法在 Swift 1.2中是 count(array)，在 Swift 2.0中是 array.count。</code></li>
+</ul>
+
+
+<p><br /></p>
+
+<ul>
+<li>loop 中的 continue 语法 将会终止当前的迭代回到 loop 的开头继续迭代。</li>
+</ul>
+
+
+<p><br /></p>
+
+<ul>
+<li>switch/case 语法可以简化较多的 if/else if 语法，Swift 要求 switch 条件变量所有可能的情况都得涵盖（
+cases should exhustive），否则 Xcode 可能无法构建应用，default 可以避免该问题。</li>
+</ul>
+
+
+<p><br /></p>
+
+<ul>
+<li>可以在 switch/case 中使用 &ldquo;&hellip;&rdquo;(half open range operator) 将变量可能的范围作为一个 case：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">studioAlbums</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span class='line'>  <span class="k">switch</span> <span class="n">studioAlbums</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">case</span> <span class="mf">0.</span><span class="p">.</span><span class="mf">.1</span><span class="o">:</span>
+</span><span class='line'>          <span class="n">println</span><span class="p">(</span><span class="s">&quot;You&#39;re just starting out&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">case</span> <span class="mf">2.</span><span class="p">.</span><span class="mf">.3</span><span class="o">:</span>
+</span><span class='line'>          <span class="n">println</span><span class="p">(</span><span class="s">&quot;You&#39;re a rising star&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">case</span> <span class="mf">4.</span><span class="p">.</span><span class="mf">.5</span><span class="o">:</span>
+</span><span class='line'>          <span class="n">println</span><span class="p">(</span><span class="s">&quot;You&#39;re world famous!&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>          <span class="n">println</span><span class="p">(</span><span class="s">&quot;Have you done something new?&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>Swift 2.0 方法调用和1.2稍有不同，需要写明参数名，目的是提高代码可读性：</code></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">printAlbumRelease</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">year</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(name) was released in \(year)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">printAlbumRelease</span><span class="p">(</span><span class="s">&quot;Fearless&quot;</span><span class="p">,</span> <span class="nl">year</span><span class="p">:</span> <span class="mi">2008</span><span class="p">)</span>
+</span><span class='line'><span class="n">printAlbumRelease</span><span class="p">(</span><span class="s">&quot;Speak Now&quot;</span><span class="p">,</span> <span class="nl">year</span><span class="p">:</span> <span class="mi">2010</span><span class="p">)</span>
+</span><span class='line'><span class="n">printAlbumRelease</span><span class="p">(</span><span class="s">&quot;Red&quot;</span><span class="p">,</span> <span class="nl">year</span><span class="p">:</span> <span class="mi">2012</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>&ldquo;->"符号为方法声明返回值：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">albumsIsTaylor</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Optionals</h2>
+
+<p><br />
+Apple 在 Swift 中为其加入了 Optional，Optional 是一种类型，可以有值，也可以等于 nil（也就是没有值）。在 oc 中，只有指向对象的指针可以为 nil，而在 swift 中基本类型创建后没有初始值，而是为 nil，并且无法使用。</p>
+
+<p>开发中遇到的一些意想不到的问题，例如程序崩溃、影响UI,最常见的原因就是因为使用了为 nil 的值，Optional 这一特性确保了代码安全性。</p>
+
+<ul>
+<li>定义一个 Optional 的值只需在类型后添加一个问号“?”：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="nl">str</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span> <span class="c1">//输出nil</span>
+</span><span class='line'>      
+</span><span class='line'><span class="c1">//以上是一个名为 str 的 Optional String.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Optional 类型无法直接使用，需要拆包(unwrap)后取出原类型的值后使用。在 Optional 类型后加上感叹号(!)进行显式拆包（Force unwrapping optionals）：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="nl">str</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span> <span class="o">=</span> <span class="s">&quot;Hallo World&quot;</span>
+</span><span class='line'>      
+</span><span class='line'><span class="n">str</span>  <span class="c1">//nil</span>
+</span><span class='line'><span class="n">str</span><span class="o">!</span>  <span class="c1">//&quot;Hallo World&quot;</span>
+</span><span class='line'>      
+</span><span class='line'><span class="n">print</span><span class="p">(</span><span class="n">str</span><span class="p">)</span> <span class="c1">//输出&quot;Optional(&quot;Hallo World&quot;)&quot;</span>
+</span><span class='line'><span class="n">print</span><span class="p">(</span><span class="n">str</span><span class="o">!</span><span class="p">)</span> <span class="c1">//输出&quot;Hallo World&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>通过 if let 语句可以判断 Optional 是否有值，如果有，将其拆包赋值给一个本地变量：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">getHaterStatus</span><span class="p">(</span><span class="nl">weather</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">weather</span> <span class="o">==</span> <span class="s">&quot;sunny&quot;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">nil</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;Hate&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">//该方法返回一个 Optional String 类型</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">takeHaterAction</span><span class="p">(</span><span class="nl">status</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s">&quot;Hate&quot;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">print</span><span class="p">(</span><span class="s">&quot;Hating&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">//该方法需要传入一个 String 类型</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="k">let</span> <span class="n">status</span> <span class="o">=</span> <span class="n">getHaterStatus</span><span class="p">(</span><span class="s">&quot;rainy&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">takeHaterAction</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+</span><span class='line'>          
+</span><span class='line'><span class="cm">/* if let 语句将调用了 getHaterStatus 方法后得到的 Optional 值拆包后赋值给本地变量 status，确保 takeHaterAction 方法传入的是一个有值的参数。 */</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><br /></p>
+
+<ul>
+<li>Optional 还提供了隐式拆包（implicitly unwrapped optionals），隐式拆包的 Optional 在使用前无需拆包。要使用隐式拆包需要在变量声明时的数据类型后加上感叹号(!)：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="nl">str</span><span class="p">:</span> <span class="n">String</span><span class="o">!</span> <span class="o">=</span> <span class="s">&quot;Hello World!&quot;</span>
+</span><span class='line'><span class="n">str</span> <span class="c1">//Hello World!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用隐式拆包需要小心，要确保变量已被正确初始化。一般会在以下情况遇到 Implicitly unwrapped：</p>
+
+<ol>
+<li>当使用 Apple 的 API 时会经常碰到隐式拆包的返回值。</li>
+<li>当使用 UIKit 的用户界面元素时。</li>
+</ol>
+
+
+<h3>总结一下 Optional：</h3>
+
+<p><br /></p>
+
+<ul>
+<li><p>一个普通类型的变量必须有值，比如一个 String 变量需要拥有一个 string，哪怕是空的字符串（"&ldquo;)。</p></li>
+<li><p>一个 Optional 类型的变量可以有值也可以无值（也就是为nil），但在使用前必须将其拆包(Unwrap)。</p></li>
+<li><p>一个隐式拆包的 Optional 类型变量可以有值也可以无值，使用前不需要拆包，因此 Swift 也不会为你检查，需要格外小心。</p></li>
+</ul>
+
+
+<p><br /></p>
+
+<hr />
+
+<p><br /></p>
+
+<ul>
+<li>Optional Chaining：
+在 Objective-C 中，对 nil 发送消息会得到 nil，但是在 Swift 中不允许这么做。当对一个 Optional 类型的对象发送消息时，通过 Optional Chaining 可以对其判断是否有值，如果是则发送消息，反之则什么也不做：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">albumReleasedYear</span><span class="p">(</span><span class="nl">year</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">year</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">2006</span><span class="o">:</span> <span class="k">return</span> <span class="s">&quot;Taylor Swift&quot;</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">2008</span><span class="o">:</span> <span class="k">return</span> <span class="s">&quot;Fearless&quot;</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">2010</span><span class="o">:</span> <span class="k">return</span> <span class="s">&quot;Speak Now&quot;</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">2012</span><span class="o">:</span> <span class="k">return</span> <span class="s">&quot;Red&quot;</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">2014</span><span class="o">:</span> <span class="k">return</span> <span class="s">&quot;1989&quot;</span>
+</span><span class='line'>    <span class="k">default</span><span class="o">:</span> <span class="k">return</span> <span class="nb">nil</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">album</span> <span class="o">=</span> <span class="n">albumReleasedYear</span><span class="p">(</span><span class="mi">2006</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="n">uppercaseString</span> <span class="c1">//输出 Optional(&quot;TAYLOR SWFIT&quot;)</span>
+</span><span class='line'><span class="c1">//即问号(?)前有值才发送消息，这就是 Optional Chaining</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Optional</span> <span class="n">Chaining</span> <span class="err">如同其名可以像链条一样连接，多长都可以，</span><span class="n">Swift</span> <span class="err">会从左至右检查直至发现</span> <span class="nb">nil</span> <span class="err">即终止：</span>
+</span><span class='line'>      
+</span><span class='line'><span class="k">let</span> <span class="n">album</span> <span class="o">=</span> <span class="n">albumReleasedYear</span><span class="p">(</span><span class="mi">2006</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="n">someOptionalValue</span><span class="o">?</span><span class="p">.</span><span class="n">someOtherOptionalValue</span><span class="o">?</span><span class="p">.</span><span class="n">whatever</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><br /></p>
+
+<ul>
+<li>The nil coalescing operator：
+Swift 的这个特性可以让你的代码更加简单和安全。例如：当 Value A 有值时则使用 Value A，如果 Value A 无值，则使用 Value B，这对 Optional 十分有用：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">album</span> <span class="o">=</span> <span class="n">albumReleasedYear</span><span class="p">(</span><span class="mi">2006</span><span class="p">)</span> <span class="o">??</span> <span class="s">&quot;unknown&quot;</span>
+</span><span class='line'><span class="n">print</span><span class="p">(</span><span class="s">&quot;The album is \(album)&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">//如果 albumReleasedYear(2006)返回的 Optional 无值，则使用非 Optional &quot;unknown&quot;.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><br /></p>
+
+<h2>Enumeration</h2>
+
+<p><br />
+- 枚举（Enum）可以将一系列相关的值定义为一个组类型，通过如下语法创建 enum：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">enum</span> <span class="n">WeatherType</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">Sun</span><span class="p">,</span> <span class="n">Cloud</span><span class="p">,</span> <span class="n">Rain</span><span class="p">,</span> <span class="n">Wind</span><span class="p">,</span> <span class="n">Snow</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>下面看看如何使用枚举类型：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">getHaterStatus</span><span class="p">(</span><span class="nl">weather</span><span class="p">:</span> <span class="n">WeatherType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">weather</span> <span class="o">==</span> <span class="n">WeatherType</span><span class="p">.</span><span class="n">Sun</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">nil</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;Hate&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">getHaterStatus</span><span class="p">(</span><span class="n">WeatherType</span><span class="p">.</span><span class="n">Cloud</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以这么定义枚举：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">enum</span> <span class="n">WeatherType</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Sun</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Cloud</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Rain</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Wind</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Snow</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以这么使用枚举：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">getHaterStatus</span><span class="p">(</span><span class="nl">weather</span><span class="p">:</span> <span class="n">WeatherType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">weather</span> <span class="o">==</span> <span class="p">.</span><span class="n">Sun</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">nil</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;Hate&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>  <span class="c1">//Swift 通过 Type inference 知道你与 WeatherType 类型比较，所以无需写明枚举类型，但是这种写法 Swift 将不会提供代码补足建议辅助</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">getHaterStatus</span><span class="p">(.</span><span class="n">Cloud</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><br /></p>
+
+<p>枚举在 switch/case 中十分有用，因为 Swfit 知道你的枚举类型中都都有什么值，所以能确保你涵盖了所有的 case：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">getHaterStatus</span><span class="p">(</span><span class="nl">weather</span><span class="p">:</span> <span class="n">WeatherType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">weather</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="nl">Sun</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">nil</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="n">Cloud</span><span class="p">,</span> <span class="p">.</span><span class="nl">Wind</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;dislike&quot;</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="nl">Rain</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;hate&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">//这段代码不会成功编译，应该添加 case .Snow 或是 default case。</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对于 Enum，Swift 还有一个非常强大的特性：可以为组中的值再附加一个值，进一步细分：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">enum</span> <span class="n">WeatherType</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Sun</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Cloud</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Rain</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Wind</span><span class="p">(</span><span class="nl">speed</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Snow</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如此，使用 switch/case 时就有了额外的条件，当条件都满足时 case 才会匹配：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">getHaterStatus</span><span class="p">(</span><span class="nl">weather</span><span class="p">:</span> <span class="n">WeatherType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">weather</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="nl">Sun</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">nil</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="n">Wind</span><span class="p">(</span><span class="k">let</span> <span class="n">speed</span><span class="p">)</span> <span class="k">where</span> <span class="n">speed</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">:</span> <span class="c1">//meh</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;meh&quot;</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="n">Cloud</span><span class="p">,</span> <span class="p">.</span><span class="nl">Wind</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;dislike&quot;</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="n">Rain</span><span class="p">,</span> <span class="p">.</span><span class="nl">Snow</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;hate&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">getHaterStatus</span><span class="p">(</span><span class="n">WeatherType</span><span class="p">.</span><span class="n">Wind</span><span class="p">(</span><span class="nl">speed</span><span class="p">:</span> <span class="mi">5</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>代码段第五行的 let 关键字的用途是声明一个能引用的常量名保存传入的参数，通过 Where 关键字来声明条件。</p>
+
+<p>Swift 从上至下判断 switch/case 语句，所以请注意 case 的排序。</p>
+
+<h2>Structs</h2>
+
+<p>Structs（结构体） 是一种复杂数据类型，包含了多个值，通过 struct 关键字定义一个结构体：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">struct</span> <span class="n">Person</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">clothes</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">shoes</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Swift 让你非常简单地创建一个结构体变量，只需要将初始值传入即可：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">taylor</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="nl">clothes</span><span class="p">:</span> <span class="s">&quot;T-shirt&quot;</span><span class="p">,</span> <span class="nl">shoes</span><span class="p">:</span> <span class="s">&quot;sneakers&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">other</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="nl">clothes</span><span class="p">:</span> <span class="s">&quot;short skirts, shoes: &quot;</span><span class="n">high</span> <span class="n">heels</span><span class="s">&quot;)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通过结构体变量名以及属性名来访问属性的值：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">print</span><span class="p">(</span><span class="n">taylor</span><span class="p">.</span><span class="n">clothes</span><span class="p">)</span>
+</span><span class='line'><span class="n">print</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">shoes</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Swift 有一个名为"copy on write"的机制，当你将一个结构体变量赋给另一个变量时，会独立拷贝一份：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">struct</span> <span class="n">Person</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">clothes</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">shoes</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">taylor</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="nl">clothes</span><span class="p">:</span> <span class="s">&quot;T-shirts&quot;</span><span class="p">,</span> <span class="nl">shoes</span><span class="p">:</span> <span class="s">&quot;sneakers&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">other</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="nl">clothes</span><span class="p">:</span> <span class="s">&quot;short skirts&quot;</span><span class="p">,</span> <span class="nl">shoes</span><span class="p">:</span> <span class="s">&quot;high heels&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">var</span> <span class="n">taylorCopy</span> <span class="o">=</span> <span class="n">taylor</span>
+</span><span class='line'><span class="n">taylorCopy</span><span class="p">.</span><span class="n">shoes</span> <span class="o">=</span> <span class="s">&quot;flip flops&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">taylor</span>       <span class="c1">//(clothes: &quot;short skirts&quot;, shoes: &quot;high heels&quot;)</span>
+</span><span class='line'><span class="n">taylorCopy</span>   <span class="c1">//(clothes: &quot;short skirts&quot;, shoes: &quot;flip flops&quot;)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Classes</h2>
+
+<p>通过 class 关键字定义一个类：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">class</span> <span class="n">Person</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">clothes</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">shoes</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但是上面有个问题，Swift 不允许创建未被正确初始化的变量。解决方法有三种：</p>
+
+<ol>
+<li>将这两个变量定义为 Optional。（这会致使代码中出现大量不必要的 Optional 类型）</li>
+<li>给变量附上一个初始值。（这行得通，但这有点浪费，除非这个初始值一定会被使用）</li>
+<li>自己写一个初始化方法。（最佳）</li>
+</ol>
+
+
+<p>通过创建一个 init() 方法来实现自定义初始化方法：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">class</span> <span class="n">Person</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">clothes</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">shoes</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">init</span><span class="p">(</span><span class="nl">clothes</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">shoes</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">clothes</span> <span class="o">=</span> <span class="n">clothes</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">shoes</span> <span class="o">=</span> <span class="n">shoes</span>
+</span><span class='line'>        <span class="c1">//init方法不需要添加 func 关键字</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>实例化一个类：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="n">taylor</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Taylor&quot;</span><span class="p">,</span> <span class="nl">age</span><span class="p">:</span> <span class="mi">25</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>继承一个类：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">class</span> <span class="nl">Singer</span><span class="p">:</span> <span class="n">Person</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在 Swift 中，想要在继承类（子类）中覆盖父类的方法，需要使用 override 关键字：</p>
+
+<p>class Singer: Person {
+    override func sing() {
+        print(&ldquo;Trucks, girls, and liquor&rdquo;)
+    }
+}</p>
+
+<p>通过 super 关键字调用父类方法：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">age</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">noiseLevel</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">noiseLevel</span> <span class="o">=</span> <span class="n">noiseLevel</span>
+</span><span class='line'>        <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="nl">age</span><span class="p">:</span> <span class="n">age</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在 Swift 中，类和结构体有点相似，都可以拥有属性和方法，区别在于结构体是值拷贝，这意味着改变拷贝值不会改变原来的值，而类是指针拷贝，拷贝的变量会指向相同的实例，见下例：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// Value type example</span>
+</span><span class='line'><span class="k">struct</span> <span class="n">S</span> <span class="p">{</span> <span class="k">var</span> <span class="nl">data</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="p">}</span>
+</span><span class='line'><span class="k">var</span> <span class="n">a</span> <span class="o">=</span> <span class="n">S</span><span class="p">()</span>
+</span><span class='line'><span class="k">var</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>                        <span class="c1">// a is copied to b</span>
+</span><span class='line'><span class="n">a</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">42</span>                        <span class="c1">// Changes a, not b</span>
+</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;\(a.data), \(b.data)&quot;</span><span class="p">)</span>    <span class="c1">// prints &quot;42, -1&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Reference type example</span>
+</span><span class='line'><span class="k">class</span> <span class="n">C</span> <span class="p">{</span> <span class="k">var</span> <span class="nl">data</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="p">}</span>
+</span><span class='line'><span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">C</span><span class="p">()</span>
+</span><span class='line'><span class="k">var</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span>                        <span class="c1">// x is copied to y</span>
+</span><span class='line'><span class="n">x</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">42</span>                        <span class="c1">// changes the instance referred to by x (and y)</span>
+</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;\(x.data), \(y.data)&quot;</span><span class="p">)</span>    <span class="c1">// prints &quot;42, 42&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Properties</h2>
+
+<p>结构体和类（统称为 types）可以拥有自己的变量和常量（统称为 properties）。types 也可拥有方法来处理 properties：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">struct</span> <span class="n">Person</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">var</span> <span class="nl">clothes</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>   <span class="k">var</span> <span class="nl">shoes</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>  
+</span><span class='line'>   <span class="k">func</span> <span class="n">describe</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">print</span><span class="p">(</span><span class="s">&quot;I like wearing \(clothes) with \(shoes)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">taylor</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="nl">clothes</span><span class="p">:</span> <span class="s">&quot;T-shirts&quot;</span><span class="p">,</span> <span class="nl">shoes</span><span class="p">:</span> <span class="s">&quot;sneakers&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">other</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="nl">clothes</span><span class="p">:</span> <span class="s">&quot;short skirts&quot;</span><span class="p">,</span> <span class="nl">shoes</span><span class="p">:</span> <span class="s">&quot;high heels&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">taylor</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span> <span class="c1">//&quot;I like wearing T-shirts with sneakers&quot;</span>
+</span><span class='line'><span class="n">other</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span> <span class="c1">//&quot;I like wearing short skirts with high heels&quot;</span>
+</span><span class='line'><span class="c1">//调用方法时，不同的对象使用相应的值</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Property observers</h3>
+
+<p>Swift 提供了两个观察者方法，willSet 和 didSet，分别会在属性的值将要改变以及改变后触发（常用于用户界面的更新）：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">struct</span> <span class="n">Person</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">clothes</span><span class="p">:</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kr">willSet</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">updateUI</span><span class="p">(</span><span class="s">&quot;I&#39;m changing from \(clothes) to \(newValue)&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="kr">didSet</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">updateUI</span><span class="p">(</span><span class="s">&quot;I just changed from \(oldValue) to \(clothes)&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">updateUI</span><span class="p">(</span><span class="nl">msg</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">var</span> <span class="n">taylor</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="nl">clothes</span><span class="p">:</span> <span class="s">&quot;T-shirts&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">taylor</span><span class="p">.</span><span class="n">clothes</span> <span class="o">=</span> <span class="s">&quot;short skirts&quot;</span> <span class="c1">//值改变，将会调用观察者方法</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Computed properties</h3>
+
+<p>Computed properties 其实就是自己重写属性的 get/set 方法：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">struct</span> <span class="n">Person</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">var</span> <span class="nl">age</span><span class="p">:</span> <span class="n">Int</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">var</span> <span class="nl">ageInDogYears</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kr">get</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">age</span> <span class="o">*</span> <span class="mi">7</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">var</span> <span class="n">fan</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="nl">age</span><span class="p">:</span> <span class="mi">25</span><span class="p">)</span>
+</span><span class='line'><span class="n">print</span><span class="p">(</span><span class="n">fan</span><span class="p">.</span><span class="n">ageInDogYears</span><span class="p">)</span> <span class="c1">//输出：25 * 7</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Static properties and methods</h3>
+
+<p>静态属性和方法属于 type（class\struct），而不属于类的实例，这可以更好的组织一个共享的储存数据。通过 static 关键字声明一个静态变量：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">struct</span> <span class="n">TaylorFan</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">static</span> <span class="k">var</span> <span class="n">favoriteSong</span> <span class="o">=</span> <span class="s">&quot;Shake it Off&quot;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">var</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>   <span class="k">var</span> <span class="nl">age</span><span class="p">:</span> <span class="n">Int</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">fan</span> <span class="o">=</span> <span class="n">TaylorFan</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;James&quot;</span><span class="p">,</span> <span class="nl">age</span><span class="p">:</span> <span class="mi">25</span><span class="p">)</span>
+</span><span class='line'><span class="n">print</span><span class="p">(</span><span class="n">TaylorFan</span><span class="p">.</span><span class="n">favoriteSong</span><span class="p">)</span>
+</span><span class='line'><span class="c1">//每个 TaylorFan 类型的对象都会有自己的名字和年龄，但他们都有共同喜欢的歌曲：&quot;Shake it Off&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><br /></p>
+
+<p>因为静态属性和方法存在于 类 中，所以静态方法是无法访问非静态属性的。</p>
+
+<h2>Access control</h2>
+
+<p>在 Xcode beta4 中 Swift 增加了这个特性，Access control 让你明确在结构体、类中的数据该怎么面向外界，有以下三种关键字：</p>
+
+<ul>
+<li>Public：所有人都可以读写属性。</li>
+<li>Internal：这是默认访问级别，模块中的 swift 代码都可以访问。</li>
+<li>Private：只有当前Swift源文件可以访问。</li>
+</ul>
+
+
+<p>大多数时候你不必明确访问级别，但有些时候你会需要将一个属性设为<code>private</code>，使其无法被其他人直接访问。
+这样声明一个 private 的属性：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">class</span> <span class="n">TaylorFan</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">private</span> <span class="k">var</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="o">!</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>注意：Playground 不受 Access control 的限制，因为它可以无碍地访问文件因此它可以读写任何数据。</p>
+
+<h2>Polymorphism and type casting</h2>
+
+<p>Polymorphism 译为多态，指的是在类的继承中，子类会继承父类的属性、方法，多态即指子类可以拥有父类或自身定义的两种行为，你可以为其选择：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">class</span> <span class="n">Album</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">var</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nl">StudioAlbum</span><span class="p">:</span> <span class="n">Album</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">var</span> <span class="nl">studio</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">studio</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">studio</span> <span class="o">=</span> <span class="n">studio</span>
+</span><span class='line'>        <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nl">LiveAlbum</span><span class="p">:</span> <span class="n">Album</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">var</span> <span class="nl">location</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">location</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">location</span>
+</span><span class='line'>        <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>    <span class="c1">//子类调用父类方法，实现父类的行为</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当子类想要实现自己的行为时，可以通过 <code>override</code>关键字 重写 父类方法，如此将会实现子类自己定义的方法行为：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">class</span> <span class="nl">LiveAlbum</span><span class="p">:</span> <span class="n">Album</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">location</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">location</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">location</span>
+</span><span class='line'>        <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="kr">override</span> <span class="k">func</span> <span class="n">getPerformance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;The live album \(name) sold lots&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>总而言之，一个对象可以同时实现自己类的行为和其父类的行为，这称为「多态」。</p>
+
+<h3>Converting types with type casting</h3>
+
+<p>这种情况时有发生：你有一个明确声明的对象，但你知道它其实是另一种类型（比如上面的继承类StudioAlbum 和 LiveAlbum 被当做 Album 保存在数组中，因为它们继承于 Album 所以是允许的），当需要调用方法时，Swift 可能不知道它的真实类型而无法编译，解决办法是 type casting，即类型转换，可以将一个对象的类型转为另一种类型：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">for</span> <span class="n">album</span> <span class="k">in</span> <span class="n">allAlbums</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="n">album</span><span class="p">.</span><span class="n">getPerformance</span><span class="p">())</span>
+</span><span class='line'><span class="p">}</span> <span class="c1">//根据上面代码块的内容</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>allAlbums</code> 数组拥有三个类型为 <code>Album</code> 的对象，但是其中两个我们知道是 <code>StudioAlbum</code> 和 <code>LiveAlbum</code>，但是 Swift 却不知道，如果你想执行 <code>print(album.studio)</code> 则无法编译，因为只有 <code>StudioAlbum</code>拥有那个属性。</p>
+
+<p>Type casting 有三种形式，但常见的只有两种：<code>as?</code> 和 <code>as!</code>，分别是可选向下转型以及强制向下转型，前者会返回一个转型后的可选值（optional value），若转型失败会返回nil；当你确定可以转型成功时使用后者，如果转型失败可能导致应用崩溃：
+<em>P.S.「转型」并不是指真的改变实例或它的值，而只是告诉 Swift 把这个对象看做某个类的实例。</em></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">for</span> <span class="n">album</span> <span class="k">in</span> <span class="n">allAlbums</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">studioAlbum</span> <span class="o">=</span> <span class="n">album</span> <span class="kt">as</span><span class="o">?</span> <span class="n">StudioAlbum</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>studioAlbum 变量将会拥有一个StudioAlbum？类型数据或是nil，这经常与<code>if let</code>配合使用来自动解包 optional 值：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">for</span> <span class="n">album</span> <span class="k">in</span> <span class="n">allAlbums</span> <span class="p">{</span>
+</span><span class='line'>   <span class="n">print</span><span class="p">(</span><span class="n">album</span><span class="p">.</span><span class="n">getPerformance</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">if</span> <span class="k">let</span> <span class="n">studioAlbum</span> <span class="o">=</span> <span class="n">album</span> <span class="kt">as</span><span class="o">?</span> <span class="n">StudioAlbum</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">print</span><span class="p">(</span><span class="n">studioAlbum</span><span class="p">.</span><span class="n">studio</span><span class="p">)</span>
+</span><span class='line'>   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="k">let</span> <span class="n">liveAlbum</span> <span class="o">=</span> <span class="n">album</span> <span class="kt">as</span><span class="o">?</span> <span class="n">LiveAlbum</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">print</span><span class="p">(</span><span class="n">liveAlbum</span><span class="p">.</span><span class="n">location</span><span class="p">)</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>遍历 allAlums 数组内的对象，并判断它们是否为特定子类，如果是，调用子类的方法/属性。</p>
+
+<p>强制向下转型（forced downcasting）就相当于转型并强制拆包，返回的是一个非 optional 值，可以直接使用：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">var</span> <span class="n">taylorSwift</span> <span class="o">=</span> <span class="n">StudioAlbum</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Taylor Swift&quot;</span><span class="p">,</span> <span class="nl">studio</span><span class="p">:</span> <span class="s">&quot;The Castles Studios&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">var</span> <span class="n">fearless</span> <span class="o">=</span> <span class="n">StudioAlbum</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Speak Now&quot;</span><span class="p">,</span> <span class="nl">studio</span><span class="p">:</span> <span class="s">&quot;Aimeeland Studio&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">var</span> <span class="nl">allAlbums</span><span class="p">:</span> <span class="p">[</span><span class="n">Album</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">taylorSwift</span><span class="p">,</span> <span class="n">fearless</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="n">album</span> <span class="k">in</span> <span class="n">allAlbums</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">studioAlbum</span> <span class="o">=</span> <span class="n">album</span> <span class="kt">as</span><span class="o">!</span> <span class="n">StudioAlbum</span>
+</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="n">studioAlbum</span><span class="p">.</span><span class="n">studio</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">//便利数组时如果数组内有 liveAlbum 类的实例就会 crash，因为使用了强制转型</span>
+</span><span class='line'>  <span class="c1">//所以为了不 crash，只存放 `StudioAlbum` 实例在数组中</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Swfit 也允许将转型写在数组遍历层，在数组便利初始就将数据转型，如此更有效率：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">for</span> <span class="n">album</span> <span class="k">in</span> <span class="n">allAlbums</span> <span class="kt">as</span><span class="o">!</span> <span class="p">[</span><span class="n">StudioAlbum</span><span class="p">]</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="n">album</span><span class="p">.</span><span class="n">studio</span><span class="p">)</span> <span class="c1">//相当于省去了 let studioAlbum = album as! StudioAlbum</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但这么用必须得确保数组中所有实例都是 StudioAlbum 类型，否则会crash。</p>
+
+<p>可选向下转型（optional downcasting）也可以这么用，但因为这样做有可能提供给「遍历」一个nil，所以需要用 ??(nil coalescing operator) 来确保提供给 loop 一个值：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">for</span> <span class="n">album</span> <span class="k">in</span> <span class="n">allAlbums</span> <span class="kt">as</span><span class="o">?</span> <span class="p">[</span><span class="n">LiveAlbum</span><span class="p">]</span> <span class="o">??</span> <span class="p">[</span><span class="n">LiveAlbum</span><span class="p">]</span><span class="err">（）</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="n">album</span><span class="p">.</span><span class="n">location</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样相当于：尝试将对象从 <code>allAlbums</code> 转为 <code>LiveAlbum</code> 类型，如果失败，就创建一个空的 <code>LiveAlbum</code> 对象来替代，这相当于啥也没做。这有可能会用得上，不过最好不这么做。</p>
+
+<h2>Closures</h2>
+
+<p>闭包（Closures）相当于 OC 中的 blocks，是包含一段代码的变量，闭包在 Cocoa Touch 中很常见。和方法（function）不同的是，闭包是变量，可以作为参数传递或是作为属性（property）储存。下面看例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">vw</span> <span class="o">=</span> <span class="bp">UIView</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="bp">UIView</span><span class="p">.</span><span class="n">animateWithDuration</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="nl">animations</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">vw</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>UIView 的 animateWithDuration 方法要求传入一个内含动画内容的闭包，其他的 Cocoa Touch 会帮你实现。之所以要使用闭包作为参数是因为 UIKit 在执行动画前需要做些准备，如此它会拷贝一份闭包内的代码并且在准备完成后执行。
+以上示例也显示出在闭包内可以使用其外部的变量，这个特性成为闭包捕获。在闭包外声明了 vw 变量，并在闭包中使用了它。这十分有用，但要注意避免强引用循环（一个对象存储着一个闭包属性，同时这个属性又引用了这个对象）。</p>
+
+<h3>Trailing closures</h3>
+
+<p>这个特性是 Swift 为了更好的可读性增加的一个语法甜头，当方法的最后一个参数是闭包时，为避免闭包内容冗长而导致可读性下降，可以将代码段写在参数括号外，函数会将其自动最为最后一个参数调用：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="bp">UIView</span><span class="p">.</span><span class="n">animateWithDuration</span><span class="p">(</span><span class="mf">0.5</span><span class="err">）</span><span class="p">{</span>
+</span><span class='line'>    <span class="n">vw</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="p">}</span>  <span class="c1">//如果函数只有闭包一个参数，可以省略掉()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>至此 Hacking with Swift 教程的语言基础部分完成了，接下来开始着手 Project 部分，边敲项目边学习。</p>
+
+<p>拓展阅读：<a href="https://www.hackingwithswift.com/new-features-swift-2">The new feature of Swift 2.0 by example</a></p>
+
+<p><em>本文根据自己的理解写下的学习笔记，由于英语和技术水平有限，一定会有不少错误和纰漏，请以原文和官方文档为准，如果能在评论中指出错误则感激不尽。</em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Frank Lee</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-09-13T17:06:01+08:00" pubdate data-updated="true">Sep 13th, 2015</time>
+      
+
+
+    </p>
+    
+      <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1344.72">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+    span.s2 {text-decoration: underline ; font-kerning: none; color: #0000ee; -webkit-text-stroke: 0px #0000ee}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">  <span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"></span></p>
+</body>
+</html>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/09/06/xie-zai-kai-xue-qian/" title="Previous Post: 写在开学前">&laquo; 写在开学前</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/10/13/ji-jiu-zhai-cheng-du-xing/" title="Next Post: 记九寨成都行（上）">记九寨成都行（上） &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+  <aside class="sidebar">
+   
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:frank1ee.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/12/05/zai-swift-zhong-shi-yong-api(json,-nsdata)/">在 Swift 中使用 API（JSON、NSData）</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/26/ri-yu-jiao-cai-%3C%3Cbiao-zhun-ri-ben-yu-%3E%3E-xue-xi-bi-ji/">日语教材《标准日本语》学习笔记</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/04/%3C%3Cying-yu-mo-fa-shi-%3E%3E-xue-xi-bi-ji/">《英语魔法师》学习笔记（续更）</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/10/27/wo-zai-ting-de-na-xie-podcast/">我在听的那些 Podcast</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/10/13/ji-jiu-zhai-cheng-du-xing/">记九寨成都行（上）</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Frank Lee -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'franklee067';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://frank1ee.github.io/blog/2015/09/13/hacking-with-swift-xue-xi-bi-ji/';
+        var disqus_url = 'http://frank1ee.github.io/blog/2015/09/13/hacking-with-swift-xue-xi-bi-ji/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  $(document).ready(function() {  
+    var stickyNavTop = $('nav').offset().top;  
+      
+    var stickyNav = function(){  
+      var scrollTop = $(window).scrollTop(); 
+      var navHasClassSticky = $('nav').hasClass('sticky');
+
+      if (scrollTop > stickyNavTop && navHasClassSticky) {   
+        return true;
+      } else if (scrollTop > stickyNavTop) {
+        $('nav').hide();
+        $('nav').addClass('sticky');
+        $('nav').fadeIn('2000');
+      } else {  
+        $('nav').removeClass('sticky');   
+      }  
+    };  
+      
+    stickyNav();  
+      
+    $(window).scroll(function() {  
+      stickyNav();  
+    });  
+  });  
+</script>
+
+
+</body>
+</html>
